@@ -7,20 +7,30 @@
 const hre = require("hardhat");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+  const contractName = "Lock"
 
-  const lockedAmount = hre.ethers.utils.parseEther("0.001");
+  const Contract = await hre.ethers.getContractFactory(contractName);
+  const contract = await Contract.deploy();
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  await contract.deployed();
 
-  await lock.deployed();
+  console.log(contractName, " deployed to:", contract.address);
 
-  console.log(
-    `Lock with ${ethers.utils.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+  let config = `
+  export const abi${contractName} = "${contract.address}"
+  `;
+
+  let data = JSON.stringify(config);
+  fs.writeFileSync("../web/config.js", JSON.parse(data));
+
+  fs.copyFile(
+    `./artifacts/contracts/${contractName}.sol/${contractName}.json`,
+    `../web/utils/abi/${contractName}.json`,
+    (err) => {
+      if (err) {
+        console.log("Error Occurred:", err);
+      }
+    }
   );
 }
 
