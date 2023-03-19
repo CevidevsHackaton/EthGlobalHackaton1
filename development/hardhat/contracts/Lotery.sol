@@ -1,0 +1,129 @@
+// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+pragma solidity >0.8.10;
+
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "./DateTime.sol";
+import "./RandomChainlink.sol";
+
+
+
+contract Lotery is DateTime, RandomChainlink {
+    
+    using Strings for uint256;  
+    
+    mapping (address => uint[]) private address_TO_id;
+    mapping (uint => address) public id_TO_address;
+    uint public pool;
+    uint public costoMensual;
+    uint public timestampNextLotery; 
+    uint public id;
+
+    function getIDfromAddress(address _address) public view returns (uint[] memory){
+        return address_TO_id[_address];
+    }
+
+
+    address[] public winners; 
+    address private winner; 
+    uint public poolWinner; //win 95% pool
+    
+
+
+    function lastwinner() public view returns(address) {
+        uint numberAllWinners = winners.length;
+        address vlastwinner = winners[numberAllWinners];
+
+        return vlastwinner;
+    }
+
+
+    function increment() internal{
+        id=id+1;
+    }
+
+
+    constructor(uint _costoMensual) {    
+        costoMensual= _costoMensual;
+
+        timeNextLotery();
+    }
+
+    receive () external payable {
+        string memory res = string(abi.encodePacked("el monto requerido es ", costoMensual.toString()));
+        require(msg.value==costoMensual, res);
+        pool=pool+msg.value;
+        increment();
+        address_TO_id[msg.sender].push(id);
+        id_TO_address[id]=msg.sender;
+        
+    }
+
+    // AUN NO SE HA IMPLEMENTADO UN SISTEMA DE SUSCRIPCION MENSUAL
+    function suscripcion() public payable {
+        string memory  res = string(abi.encodePacked("el monto requerido es ", costoMensual.toString()));
+        require(msg.value==costoMensual, res);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        pool=pool+msg.value;
+        increment();
+        address_TO_id[msg.sender].push(id);
+        id_TO_address[id]=msg.sender;
+
+    }
+
+
+    function timeNextLotery() private {
+
+        _DateTime memory dt = parseTimestamp(block.timestamp);
+
+        uint8 NextMonth;
+        uint8 thisMoth = dt.month;
+
+        if (thisMoth<12){
+            NextMonth = thisMoth+1;
+        }else {
+            NextMonth=1;
+        }
+
+        // timestampNextLotery = toTimestamp(dt.year, NextMonth,1);
+        timestampNextLotery = block.timestamp + 300;
+        
+    }
+
+    // FUNCION QUE ELIGE UN NUMERO RANDOM Y LO GUARDA EN map_reqId_reqStatus[id].randomWords[0]
+    function Random() public onlyOwner  {    
+        require(block.timestamp > timestampNextLotery, "Aun no es momento de seleccionar un ganador");
+        requestRandomWords();
+    }
+
+
+    function getWinner() public onlyOwner {
+        require(lastRequestId >0, "Ejecuta la funcion Random y espera 3 bloques de confirmacion para ejecutar esta funcion");
+        
+        uint idWinner = map_reqId_reqStatus[lastRequestId].randomWords[0] % id;
+        
+        winner = id_TO_address[idWinner];
+        winners.push(winner);
+        poolWinner = pool*95/100;
+        
+        pool =0;
+        lastRequestId=0;
+    
+        timeNextLotery();
+        withdrawWinner ();
+        id=0;
+
+    }
+
+
+    function withdrawWinner () internal returns(bool){
+        
+        bool res = payable(winner).send(poolWinner);
+        
+        winner=0x0000000000000000000000000000000000000000;
+        poolWinner=0;
+        
+        return res;
+    }
+
+}
+
+//remixd -s /home/danyr/proyectos/EthGlobalHackaton1/development/hardhat --remix-ide https://remix.ethereum.org
