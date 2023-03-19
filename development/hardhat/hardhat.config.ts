@@ -58,9 +58,22 @@ const config: HardhatUserConfig = {
     },
 
 
-    Test_ETH_Goerli: {
+    Goerli_ETH: {
 
       url: process.env.API_INFURA_GOERLI,
+
+      accounts: {
+        mnemonic: process.env.SEED,
+        path: "m/44'/60'/0'/0",
+        initialIndex: 0,
+        count: 10,
+        passphrase: "",
+      },
+    },
+
+    Sepolia_ETH: {
+
+      url: process.env.API_INFURA_SEPOLIA,
 
       accounts: {
         mnemonic: process.env.SEED,

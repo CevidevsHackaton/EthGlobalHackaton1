@@ -4,6 +4,7 @@ pragma solidity >0.8.10;
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./DateTime.sol";
 import "./RandomChainlink.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 
 
 
@@ -17,6 +18,7 @@ contract Lotery is DateTime, RandomChainlink {
     uint public costoMensual;
     uint public timestampNextLotery; 
     uint public id;
+    uint public idMomentoSorteo;
 
     function getIDfromAddress(address _address) public view returns (uint[] memory){
         return address_TO_id[_address];
@@ -51,6 +53,8 @@ contract Lotery is DateTime, RandomChainlink {
     receive () external payable {
         string memory res = string(abi.encodePacked("el monto requerido es ", costoMensual.toString()));
         require(msg.value==costoMensual, res);
+        //require(!paused(), "Se ha pausado los depositos, espera hasta que se reclame el premio con getWinner()");
+
         pool=pool+msg.value;
         increment();
         address_TO_id[msg.sender].push(id);
@@ -61,7 +65,9 @@ contract Lotery is DateTime, RandomChainlink {
     // AUN NO SE HA IMPLEMENTADO UN SISTEMA DE SUSCRIPCION MENSUAL
     function suscripcion() public payable {
         string memory  res = string(abi.encodePacked("el monto requerido es ", costoMensual.toString()));
-        require(msg.value==costoMensual, res);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+        require(msg.value==costoMensual, res);    
+        //require(!paused(), "Se ha pausado los depositos, espera hasta que se reclame el premio con getWinner()");
+
         pool=pool+msg.value;
         increment();
         address_TO_id[msg.sender].push(id);
@@ -84,20 +90,25 @@ contract Lotery is DateTime, RandomChainlink {
         }
 
         // timestampNextLotery = toTimestamp(dt.year, NextMonth,1);
-        timestampNextLotery = block.timestamp + 300;
+        timestampNextLotery = block.timestamp + 120;
         
     }
 
     // FUNCION QUE ELIGE UN NUMERO RANDOM Y LO GUARDA EN map_reqId_reqStatus[id].randomWords[0]
     function Random() public onlyOwner  {    
         require(block.timestamp > timestampNextLotery, "Aun no es momento de seleccionar un ganador");
+        require(id >0, "No hay ningun participante");
         requestRandomWords();
+        idMomentoSorteo = id;
+        id=0;
+
+        //_pause();
+
     }
 
 
     function getWinner() public onlyOwner {
         require(lastRequestId >0, "Ejecuta la funcion Random y espera 3 bloques de confirmacion para ejecutar esta funcion");
-        
         uint idWinner = map_reqId_reqStatus[lastRequestId].randomWords[0] % id;
         
         winner = id_TO_address[idWinner];
@@ -109,8 +120,8 @@ contract Lotery is DateTime, RandomChainlink {
     
         timeNextLotery();
         withdrawWinner ();
-        id=0;
 
+        //_unpause();
     }
 
 
@@ -126,4 +137,4 @@ contract Lotery is DateTime, RandomChainlink {
 
 }
 
-//remixd -s /home/danyr/proyectos/EthGlobalHackaton1/development/hardhat --remix-ide https://remix.ethereum.org
+//remixd -s /home/danyr/proyectos/hackaton2/EthGlobalHackaton1/development/hardhat --remix-ide https://remix.ethereum.org
