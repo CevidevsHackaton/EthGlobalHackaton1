@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import IndexDropdown from "../Dropdowns/IndexDropdown";
 import { FaFileAlt, FaTwitter, FaGithub } from "react-icons/fa"
+import ButtonConnect from "../Blockchain/Button/ButtonConnect";
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -71,6 +72,9 @@ export default function Navbar() {
                   <i className="text-white text-lg leading-lg "><FaGithub /></i>
                   <span className="lg:hidden inline-block ml-2">Star</span>
                 </Link>
+              </li>
+              <li className="flex items-center">
+                <ButtonConnect />
               </li>
             </ul>
           </div>

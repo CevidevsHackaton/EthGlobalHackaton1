@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Navbar from "../components/Navbars/AuthNavbar";
 import Footer from "../components/Footers/Footer";
 
-import banner2 from "../assets/img/banner-2-800x800.jpg"
+import banner2 from "@/assets/img/banner-2-800x800.jpg"
 
 export default function Landing() {
   return (
@@ -34,7 +34,7 @@ export default function Landing() {
                     Your story starts with us.
                   </h1>
                   <p className="mt-4 text-lg text-white">
-                    a {require("assets/img/banner-2-800x800.jpg").src}
+                    a {require("@/assets/img/banner-2-800x800.jpg").src}
                     This is a simple example of a Landing Page you can build
                     using.
                   </p>
@@ -140,7 +140,7 @@ export default function Landing() {
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-lightBlue-500">
                   <Image
                     alt="..."
-                    src={require("assets/img/banner-1-800x800.jpg").default}
+                    src={require("@/assets/img/banner-1-800x800.jpg").default}
                     className="w-full align-middle rounded-t-lg"
                   />
                   <blockquote className="relative p-8 mb-4">
@@ -197,7 +197,7 @@ export default function Landing() {
                 <Image
                   alt="..."
                   className="max-w-full rounded-lg shadow-lg"
-                  src={require("assets/img/banner-3-800x800.jpg").default}
+                  src={require("@/assets/img/banner-3-800x800.jpg").default}
                 />
               </div>
               <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
@@ -278,7 +278,7 @@ export default function Landing() {
                 <div className="px-6">
                   <Image
                     alt="..."
-                    src={require("assets/img/team-1-800x800.jpg").default}
+                    src={require("@/assets/img/team-1-800x800.jpg").default}
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
@@ -313,7 +313,7 @@ export default function Landing() {
                 <div className="px-6">
                   <Image
                     alt="..."
-                    src={require("assets/img/team-2-800x800.jpg").default}
+                    src={require("@/assets/img/team-2-800x800.jpg").default}
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
@@ -342,7 +342,7 @@ export default function Landing() {
                 <div className="px-6">
                   <Image
                     alt="..."
-                    src={require("assets/img/team-3-800x800.jpg").default}
+                    src={require("@/assets/img/team-3-800x800.jpg").default}
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
@@ -377,7 +377,7 @@ export default function Landing() {
                 <div className="px-6">
                   <Image
                     alt="..."
-                    src={require("assets/img/team-4-470x470.png").default}
+                    src={require("@/assets/img/team-4-470x470.png").default}
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">
