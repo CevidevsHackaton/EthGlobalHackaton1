@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 
 
-contract Lotery is DateTime, RandomChainlink {
+contract Lotery is DateTime, RandomChainlink, Pausable {
     
     using Strings for uint256;  
     
@@ -53,7 +53,7 @@ contract Lotery is DateTime, RandomChainlink {
     receive () external payable {
         string memory res = string(abi.encodePacked("el monto requerido es ", costoMensual.toString()));
         require(msg.value==costoMensual, res);
-        //require(!paused(), "Se ha pausado los depositos, espera hasta que se reclame el premio con getWinner()");
+        require(!paused(), "Se ha pausado los depositos, espera hasta que se reclame el premio con getWinner()");
 
         pool=pool+msg.value;
         increment();
@@ -66,7 +66,7 @@ contract Lotery is DateTime, RandomChainlink {
     function suscripcion() public payable {
         string memory  res = string(abi.encodePacked("el monto requerido es ", costoMensual.toString()));
         require(msg.value==costoMensual, res);    
-        //require(!paused(), "Se ha pausado los depositos, espera hasta que se reclame el premio con getWinner()");
+        require(!paused(), "Se ha pausado los depositos, espera hasta que se reclame el premio con getWinner()");
 
         pool=pool+msg.value;
         increment();
@@ -102,14 +102,14 @@ contract Lotery is DateTime, RandomChainlink {
         idMomentoSorteo = id;
         id=0;
 
-        //_pause();
+        _pause();
 
     }
 
 
     function getWinner() public onlyOwner {
         require(lastRequestId >0, "Ejecuta la funcion Random y espera 3 bloques de confirmacion para ejecutar esta funcion");
-        uint idWinner = map_reqId_reqStatus[lastRequestId].randomWords[0] % id;
+        uint idWinner = map_reqId_reqStatus[lastRequestId].randomWords[0] % idMomentoSorteo;
         
         winner = id_TO_address[idWinner];
         winners.push(winner);
@@ -121,7 +121,7 @@ contract Lotery is DateTime, RandomChainlink {
         timeNextLotery();
         withdrawWinner ();
 
-        //_unpause();
+        _unpause();
     }
 
 
