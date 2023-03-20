@@ -7,6 +7,7 @@ import Link from 'next/link';
 import IndexDropdown from "../Dropdowns/IndexDropdown";
 import { FaFileAlt, FaTwitter, FaGithub } from "react-icons/fa"
 import ButtonConnect from "../Blockchain/Button/ButtonConnect";
+import PagesUserDropdowns from "../Blockchain/Dropdowns/PagesUserDropdowns";
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -74,7 +75,9 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="flex items-center">
-                <ButtonConnect />
+                <ButtonConnect >
+                  <PagesUserDropdowns />
+                </ButtonConnect>
               </li>
             </ul>
           </div>
