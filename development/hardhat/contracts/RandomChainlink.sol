@@ -39,11 +39,11 @@ contract RandomChainlink is
     // Cannot exceed VRFV2Wrapper.getConfig().maxNumWords.
     uint32 numWords = 1;
 
-    // Address LINK - hardcoded for  Sepolia // Mumbai
-    address linkAddress =  0x779877A7B0D9E8603169DdbD7836e478b4624789; // 0x326C977E6efc84E512bB9C30f76E30c160eD06FB;
+    // Address LINK - hardcoded for Goerli // Sepolia // Mumbai
+    address linkAddress = 	0x326C977E6efc84E512bB9C30f76E30c160eD06FB;// 0x779877A7B0D9E8603169DdbD7836e478b4624789; // 0x326C977E6efc84E512bB9C30f76E30c160eD06FB;
 
-    // address WRAPPER - hardcoded for  Sepolia // Mumbai
-    address wrapperAddress = 	 0xab18414CD93297B0d12ac29E63Ca20f515b3DB46; // 0x99aFAf084eBA697E584501b8Ed2c0B37Dd136693;
+    // address WRAPPER - hardcoded for Goerli // Sepolia // Mumbai
+    address wrapperAddress =  	0x708701a1DfF4f478de54383E49a627eD4852C816; // 0xab18414CD93297B0d12ac29E63Ca20f515b3DB46; // 0x99aFAf084eBA697E584501b8Ed2c0B37Dd136693;
 
     constructor()
         ConfirmedOwner(msg.sender)

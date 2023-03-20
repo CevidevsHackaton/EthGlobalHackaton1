@@ -7,6 +7,11 @@ import "./RandomChainlink.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
 
+// PUSH Comm Contract Interface
+interface IPUSHCommInterface {
+    function sendNotification(address _channel, address _recipient, bytes calldata _identity) external;
+}
+
 
 contract Lotery is DateTime, RandomChainlink, Pausable {
     
@@ -119,20 +124,50 @@ contract Lotery is DateTime, RandomChainlink, Pausable {
         lastRequestId=0;
     
         timeNextLotery();
-        withdrawWinner ();
+        notification(winner); 
+        withdrawWinner();
+   
 
         _unpause();
     }
 
 
     function withdrawWinner () internal returns(bool){
-        
         bool res = payable(winner).send(poolWinner);
         
-        winner=0x0000000000000000000000000000000000000000;
+        winner=address(0);
         poolWinner=0;
         
         return res;
+    }
+
+
+    function notification(address _winner) internal {
+
+        address CHANNEL_ADDRESS =  0x70E24350DCA5C9EB381fE4bCf4474E27f1e66C12;
+        string memory Title = "You Win!";
+        string memory Body = "Congratulations on winning the award!";
+
+        // address Staging Ethereum contract - Goerli 0x87da9Af1899ad477C67FeA31ce89c1d2435c77DC 
+        // address Staging Polygon contract - Mumbai 0xb3971BCef2D791bc4027BbfedFb47319A4AAaaAa
+
+        IPUSHCommInterface(0xb3971BCef2D791bc4027BbfedFb47319A4AAaaAa).sendNotification(
+                        CHANNEL_ADDRESS, 
+                        _winner, 
+                        bytes(  
+                            string(
+                                abi.encodePacked(
+                                    "0", 
+                                    "+", 
+                                    "3", 
+                                    "+", 
+                                    Title,                                    
+                                    "+", 
+                                    Body 
+                                )
+                            )
+                        )
+                    );
     }
 
 }
