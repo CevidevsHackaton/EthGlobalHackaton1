@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "wagmi": "wagmi"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
@@ -15,11 +16,13 @@
     "@types/react-dom": "18.0.11",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "ethers": "^5.7.2",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "wagmi": "^0.12.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
