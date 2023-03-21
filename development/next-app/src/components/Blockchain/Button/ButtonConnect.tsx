@@ -1,14 +1,17 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useAccount, useConnect } from 'wagmi'
 
 type ButtonConnectProps = {
   children: ReactNode
 }
+type renderType = string | ReactNode
 
 const ButtonConnect = ({ children }: ButtonConnectProps) => {
   const { connect, connectors } = useConnect()
 
   const { isConnected } = useAccount()
+
+  const [render, setRender] = useState<renderType>("")
 
   const Button = connectors && connectors.map((connectItem) => {
     return (<button
@@ -22,15 +25,20 @@ const ButtonConnect = ({ children }: ButtonConnectProps) => {
   })
 
 
-  const AdrressOrButton = isConnected ? children : Button || ''
+  useEffect(() => {
+    if (isConnected) {
+      setRender(children)
+    } else {
+      setRender(Button)
+    }
+  }, [Button, children, isConnected])
 
 
 
   return (
-    <div>
-      {AdrressOrButton}
-
-    </div>
+    <>
+      {render}
+    </>
 
   );
 };

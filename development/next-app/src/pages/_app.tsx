@@ -12,6 +12,7 @@ import { mainnet, sepolia, polygonZkEvmTestnet } from 'wagmi/chains'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 // import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { Layout } from '@/layouts/PrincipalLayout'
 
 const { chains, provider, webSocketProvider } = configureChains(
   [sepolia,],
@@ -48,7 +49,9 @@ const client = createClient({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={client}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </WagmiConfig>
   )
 }

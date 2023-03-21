@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 // components
 
-import Navbar from "../components/Navbars/AuthNavbar";
 import Footer from "../components/Footers/Footer";
 
 import banner2 from "@/assets/img/banner-2-800x800.jpg"
+import { LayoutContext } from "@/layouts/PrincipalLayout";
 
 export default function Landing() {
+  const { setTransparent } = useContext(LayoutContext)
+  useEffect(() => {
+    setTransparent(true)
+  },)
   return (
     <>
-      <Navbar />
       <main>
         <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
           <div
