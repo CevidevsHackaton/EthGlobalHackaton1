@@ -13,7 +13,7 @@ interface IPUSHCommInterface {
 }
 
 
-contract Lotery is DateTime, RandomChainlink, Pausable {
+contract Lottery is DateTime, RandomChainlink, Pausable {
     
     using Strings for uint256;  
     
@@ -24,6 +24,9 @@ contract Lotery is DateTime, RandomChainlink, Pausable {
     uint public timestampNextLotery; 
     uint public id;
     uint public idMomentoSorteo;
+
+    event startLottery (uint numberBlock);
+
 
     function getIDfromAddress(address _address) public view returns (uint[] memory){
         return address_TO_id[_address];
@@ -51,8 +54,8 @@ contract Lotery is DateTime, RandomChainlink, Pausable {
 
     constructor(uint _costoMensual) {    
         costoMensual= _costoMensual;
-
         timeNextLotery();
+        emit startLottery(block.number);
     }
 
     receive () external payable {
@@ -127,7 +130,7 @@ contract Lotery is DateTime, RandomChainlink, Pausable {
         notification(winner); 
         withdrawWinner();
    
-
+        emit startLottery(block.number);
         _unpause();
     }
 
