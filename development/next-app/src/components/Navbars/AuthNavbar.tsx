@@ -3,16 +3,16 @@ import React from "react";
 import Link from 'next/link';
 
 // components
-
 import IndexDropdown from "../Dropdowns/IndexDropdown";
-import { FaFileAlt, FaTwitter, FaGithub } from "react-icons/fa"
+import { FaFileAlt, FaTwitter, FaGithub, FaHamburger } from "react-icons/fa"
 import ButtonConnect from "../Blockchain/Button/ButtonConnect";
+import PagesUserDropdowns from "../Blockchain/Dropdowns/PagesUserDropdowns";
 
-export default function Navbar() {
+export default function Navbar({ transparent = false }: { transparent?: Boolean }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <>
-      <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-transparent shadow">
+      <nav className={`${transparent ? 'bg-transparent' : 'bg-blueGray-800'} top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg shadow`}>
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
@@ -22,16 +22,16 @@ export default function Navbar() {
               EthGlobal
             </Link>
             <button
-              className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              className="cursor-pointer text-xl text-white leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <i className="fas fa-bars"></i>
+              <FaHamburger />
             </button>
           </div>
           <div
             className={
-              "lg:flex flex-grow items-center bg-white lg:bg-opacity-0 lg:shadow-none" +
+              "lg:flex flex-grow items-center bg-blueGray-800 lg:bg-opacity-0 lg:shadow-none" +
               (navbarOpen ? " block" : " hidden")
             }
             id="example-navbar-warning"
@@ -74,7 +74,9 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="flex items-center">
-                <ButtonConnect />
+                <ButtonConnect >
+                  <PagesUserDropdowns />
+                </ButtonConnect>
               </li>
             </ul>
           </div>
