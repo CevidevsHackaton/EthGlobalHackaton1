@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@chainlink/contracts": "^0.5.1",
-    "@openzeppelin/contracts": "^4.8.2"
+    "@openzeppelin/contracts": "^4.8.2",
+    "@pushprotocol/restapi": "^0.8.2"
   }
 }

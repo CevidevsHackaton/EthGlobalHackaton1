@@ -25,18 +25,25 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
     uint public id;
     uint public idMomentoSorteo;
 
-    event startLottery (uint numberBlock);
-
-
-    function getIDfromAddress(address _address) public view returns (uint[] memory){
-        return address_TO_id[_address];
-    }
-
 
     address[] public winners; 
     address private winner; 
     uint public poolWinner; //win 95% pool
     
+
+    event startLottery (uint indexed numberBlock);
+    event depositLottery (address indexed user );
+
+    constructor(uint _costoMensual) {    
+        costoMensual= _costoMensual;
+        timeNextLotery();
+        emit startLottery(block.number);
+    }
+
+
+    function getIDfromAddress(address _address) public view returns (uint[] memory){
+        return address_TO_id[_address];
+    }
 
 
     function lastwinner() public view returns(address) {
@@ -52,11 +59,7 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
     }
 
 
-    constructor(uint _costoMensual) {    
-        costoMensual= _costoMensual;
-        timeNextLotery();
-        emit startLottery(block.number);
-    }
+
 
     receive () external payable {
         string memory res = string(abi.encodePacked("el monto requerido es ", costoMensual.toString()));
@@ -67,6 +70,8 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
         increment();
         address_TO_id[msg.sender].push(id);
         id_TO_address[id]=msg.sender;
+
+        emit depositLottery(msg.sender);
         
     }
 
@@ -81,6 +86,7 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
         address_TO_id[msg.sender].push(id);
         id_TO_address[id]=msg.sender;
 
+        emit depositLottery(msg.sender);
     }
 
 
@@ -118,18 +124,18 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
     function getWinner() public onlyOwner {
         require(lastRequestId >0, "Ejecuta la funcion Random y espera 3 bloques de confirmacion para ejecutar esta funcion");
         uint idWinner = map_reqId_reqStatus[lastRequestId].randomWords[0] % idMomentoSorteo;
-        
+
         winner = id_TO_address[idWinner];
         winners.push(winner);
         poolWinner = pool*95/100;
-        
+
         pool =0;
         lastRequestId=0;
-    
+
         timeNextLotery();
         notification(winner); 
         withdrawWinner();
-   
+
         emit startLottery(block.number);
         _unpause();
     }
@@ -146,7 +152,7 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
 
 
     function notification(address _winner) internal {
-
+        
         address CHANNEL_ADDRESS =  0x70E24350DCA5C9EB381fE4bCf4474E27f1e66C12;
         string memory Title = "You Win!";
         string memory Body = "Congratulations on winning the award!";
