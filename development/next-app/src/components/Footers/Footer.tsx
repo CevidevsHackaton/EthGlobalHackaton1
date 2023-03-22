@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
@@ -26,7 +27,7 @@ export default function Footer() {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap text-center lg:text-left">
             <div className="w-full lg:w-6/12 px-4">
-              <h4 className="text-3xl font-semibold">Let's keep in touch!</h4>
+              <h4 className="text-3xl font-semibold">Let&apos;s keep in touch!</h4>
               <h5 className="text-lg mt-0 mb-2 text-blueGray-600">
                 Find us on any of these platforms, we respond 1-2 business days.
               </h5>
@@ -65,36 +66,36 @@ export default function Footer() {
                   </span>
                   <ul className="list-unstyled">
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="/"
                       >
                         About Us
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="/"
                       >
                         Blog
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://www.github.com/RavilcoDev"
                       >
                         Github
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="/"
                       >
                         Free Products
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -104,36 +105,36 @@ export default function Footer() {
                   </span>
                   <ul className="list-unstyled">
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="https://github.com/RavilcoDev"
                       >
                         MIT License
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href=""
                       >
                         Terms & Conditions
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="/"
                       >
                         Privacy Policy
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
                         href="/"
                       >
                         Contact Us
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -145,12 +146,12 @@ export default function Footer() {
             <div className="w-full md:w-4/12 px-4 mx-auto text-center">
               <div className="text-sm text-blueGray-500 font-semibold py-1">
                 Copyright © {new Date().getFullYear()}  React by{" "}
-                <a
+                <Link
                   href="/"
                   className="text-blueGray-500 hover:text-blueGray-800"
                 >
                   ALL
-                </a>
+                </Link>
                 .
               </div>
             </div>
