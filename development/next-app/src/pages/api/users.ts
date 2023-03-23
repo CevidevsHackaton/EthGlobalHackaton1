@@ -1,14 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { TRaffle } from '@/types/raffle'
-
-import { raffles } from '@/mocks/raffles'
+import { TUser } from '@/types/user'
+import { users } from '@/mocks/users'
 
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<TRaffle[]>
+  res: NextApiResponse<TUser[]>
 ) {
-  res.status(200).json(raffles)
+  res.status(200).json(users)
 }

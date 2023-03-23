@@ -97,7 +97,7 @@ const PagesUserDropdowns = () => {
                 User
               </span>
               <Link
-                href="profile/1"
+                href="/profile/1"
                 className="text-sm cursor-pointer py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
               >
                 Profile

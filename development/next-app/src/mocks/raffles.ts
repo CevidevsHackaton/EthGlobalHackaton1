@@ -1,4 +1,4 @@
-import { TRaffle } from "@/types"
+import { TRaffle } from "@/types/raffle"
 export const raffles: TRaffle[] = [
   {
     id: 'A215D15C80AC2D12',

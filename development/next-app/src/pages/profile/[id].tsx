@@ -5,7 +5,9 @@ import React, { useContext, useEffect } from 'react';
 import { TabPanel, useTabs } from "react-headless-tabs";
 import { TabSelector } from "@/components/Tabs/TabSelector";
 import MyMenberships from '@/containers/MyMemberships';
-import MyParticipations from '@/containers/MyMemberships/MyParticipations';
+import MyParticipations from '@/containers/MyParticipations';
+import Link from 'next/link';
+import { MdModeEditOutline } from 'react-icons/md';
 
 
 const Profile = () => {
@@ -20,17 +22,32 @@ const Profile = () => {
   return (
     <main className='pt-16 bg-slate-100 min-h-screen'>
       <div className='grid gap-10 sm:grid-cols-4 m-10'>
-        <CardFrame className='grid gap-10'>
-          <strong className='text-4xl '>Nombre</strong>
-          <Image
-            alt="..."
-            src={require("@/assets/img/team-1-800x800.jpg").default}
-            className="shadow-lg rounded-full mx-auto max-w-150-px xl:max-w-210-px "
-          />
-          <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum maxime architecto earum cum, odit id? Quasi vero a enim consectetur cumque saepe dolore, commodi necessitatibus obcaecati praesentium harum, odio dolorem?</span>
-        </CardFrame>
-        <div className='sm:col-span-3'>
+        <div>
 
+          <CardFrame className='grid gap-10'>
+            <div>
+              <strong className='text-4xl '>Nombre</strong>
+              <button
+                className="float-right  text-white p-2 text-lg bg-green-400 hover:bg-green-500 font-medium tracking-wider rounded-lg transition ease-in duration-300">
+                <MdModeEditOutline />
+              </button>
+            </div>
+            <div className=" relative h-72 w-72 mx-auto  sm:mb-0 mb-3">
+              <Image
+                alt="..."
+                src={require("@/assets/img/team-1-800x800.jpg").default}
+                className="shadow-lg rounded-full mx-auto  "
+              />
+              <Link href="#"
+                className="absolute right-5 bottom-6 hover:bottom-4 hover:right-3 -ml-3  text-white p-2 hover:p-4 text-lg bg-green-400 hover:bg-green-500 font-medium tracking-wider rounded-full transition ease-in duration-300">
+                <MdModeEditOutline />
+              </Link>
+            </div>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum maxime architecto earum cum, odit id? Quasi vero a enim consectetur cumque saepe dolore, commodi necessitatibus obcaecati praesentium harum, odio dolorem?</span>
+          </CardFrame>
+        </div>
+
+        <div className='sm:col-span-3'>
           <nav className=" flex border-b border-gray-300">
             <TabSelector
               isActive={selectedTab === "Memberships"}

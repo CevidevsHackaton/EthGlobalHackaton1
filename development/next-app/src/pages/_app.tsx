@@ -13,6 +13,7 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 // import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { Layout } from '@/layouts/PrincipalLayout'
+import ProtectedRoute from '@/router/ProtectedRoute'
 
 const { chains, provider, webSocketProvider } = configureChains(
   [sepolia,],
@@ -46,12 +47,14 @@ const client = createClient({
   webSocketProvider,
 })
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps, router }: AppProps) {
   return (
     <WagmiConfig client={client}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </WagmiConfig>
+      <ProtectedRoute router={router}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ProtectedRoute>
+    </WagmiConfig >
   )
 }
