@@ -5,6 +5,7 @@ import CardFrame from '@/components/Cards/CardFrame';
 import { LayoutContext } from '@/layouts/PrincipalLayout';
 
 const MembershipDetail = () => {
+  console.log("membership")
   const { setTransparent } = useContext(LayoutContext)
   useEffect(() => {
     setTransparent(false)

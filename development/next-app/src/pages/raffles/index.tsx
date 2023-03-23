@@ -1,6 +1,6 @@
 import CardRaffle from "@/components/Cards/CardRaffle";
 import { LayoutContext } from "@/layouts/PrincipalLayout";
-import { TRaffle } from "@/types";
+import { TRaffle } from "@/types/raffle";
 import React, { useContext, useEffect, useState } from "react";
 
 export default function Landing() {

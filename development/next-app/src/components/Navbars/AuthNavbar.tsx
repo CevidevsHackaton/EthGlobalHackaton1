@@ -48,19 +48,17 @@ export default function Navbar({ transparent = false }: { transparent?: Boolean 
               </li>
             </ul>
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="flex items-center">
-                <IndexDropdown />
-              </li>
+
 
               <li className="flex items-center">
-                <a
-                  className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                <Link
+                  className="hover:text-white text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href="https://twitter.com/cevidevs"
                   target="_blank"
                 >
                   <i className="text-white text-lg leading-lg " ><FaTwitter /></i>
                   <span className="lg:hidden inline-block ml-2">Tweet</span>
-                </a>
+                </Link>
               </li>
 
               <li className="flex items-center">

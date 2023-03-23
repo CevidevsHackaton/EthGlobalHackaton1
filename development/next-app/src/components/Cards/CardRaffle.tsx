@@ -1,11 +1,10 @@
-import { TRaffle } from '@/types';
+import { TRaffle } from '@/types/raffle';
 import { formatDistance } from 'date-fns';
 import { es, enUS } from 'date-fns/locale';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { FaCalendar } from 'react-icons/fa'
-import { GiLotus } from 'react-icons/gi'
+import { TbDog } from 'react-icons/tb'
 import CardFrame from './CardFrame';
 
 const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
@@ -17,7 +16,9 @@ const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
           aria-hidden="true"
         >
           <div className="flex items-center gap-1">
-            <span className="text-5xl text-blueGray-800 "><GiLotus /></span>
+            <span className="text-5xl text-blueGray-800 ">
+              <TbDog />
+            </span>
           </div>
         </div>
 

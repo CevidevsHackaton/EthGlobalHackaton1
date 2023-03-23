@@ -1,10 +1,9 @@
-import CardFrame from '@/components/Cards/CardFrame';
-import CardMembership from '@/components/Cards/CardMembership';
 import CardRaffleSimple from '@/components/Cards/CardRaffleSimple';
+import CardMembership from '@/components/Cards/CardMembership';
 import { TRaffle } from '@/types/raffle';
 import React, { useEffect, useState } from 'react';
 
-const MyMenberships = () => {
+const MyParticipations = () => {
   const [raffles, setRaffles] = useState<TRaffle[]>([])
   useEffect(() => {
     window
@@ -13,36 +12,27 @@ const MyMenberships = () => {
       .then((data: TRaffle[]) => {
         setRaffles(data)
       })
-
   },)
-
   return (
     <main className='grid gap-10 sm:grid-cols-2'>
       <div >
         <div className='grid gap-5'>
-          <button className="max-h-11 bg-blueGray-500 hover:bg-blueGray-700 text-white font-bold py-2 px-4 border border-blueGray-700 rounded">
-            New Membership +
-          </button>
-          <CardMembership />
-          <CardMembership />
-          <CardMembership />
-          <CardMembership />
+          <CardMembership color='#26C6DA' />
+          <CardMembership color='#fecdd3' />
+          <CardMembership color='#60a5fa' />
+          <CardMembership color='#15803d' />
         </div>
 
       </div>
       <div>
 
         <div className='grid gap-5 grid-'>
-          <button className="bg-blueGray-500 hover:bg-blueGray-700 text-white font-bold py-2 px-4 border border-blueGray-700 rounded">
-            New Rauffle +
-          </button>
           {raffles.map((raffle, idx) => <CardRaffleSimple key={idx} raffle={raffle} />)}
 
         </div>
       </div>
     </main >
-
   );
 };
 
-export default MyMenberships;
+export default MyParticipations;
