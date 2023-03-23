@@ -2,11 +2,10 @@
 
 pragma solidity ^0.8.10;
 
-// Importar el contrato Ownable de OpenZeppelin
-import "@openzeppelin/contracts/access/Ownable.sol"; 
+
 
 // Declaración del contrato de suscripciones
-contract Subscription is Ownable {
+contract Subscription  {
     uint256  priceMembership;
 
     // Estructura que almacena información de cada suscriptor
@@ -31,20 +30,21 @@ contract Subscription is Ownable {
 
        
     // Constructor del contrato
-    constructor()  {
-        uint256 _priceMembership = 10;
+    constructor(uint _priceMembership)  {
+        priceMembership = _priceMembership;
+
     }
 
      // Verificador para aceptar el valor del pago de la suscripción
     modifier needPriceMembership() {
         require(
-            msg.value > priceMembership , 
-            "El valor debe ser mayor a X"
+            msg.value == priceMembership , 
+            "El valor enviado no coincide con el precio de la membresia"
         );
         _;
     }   
     // Función para suscribirse
-    function subscribe(uint256 durationInDays) public payable needPriceMembership onlyOwner {
+    function subscribe(uint256 durationInDays) public payable needPriceMembership  {
         require(!subscribers[msg.sender].isSubscribed, "El usuario ya esta suscrito");
         
         uint256 expirationDate = block.timestamp + (durationInDays * 1 days);
@@ -54,7 +54,7 @@ contract Subscription is Ownable {
     }
     
     // Función para renovar una suscripción
-    function renewSubscription(uint256 durationInDays) public payable needPriceMembership onlyOwner {
+    function renewSubscription(uint256 durationInDays) public payable needPriceMembership  {
 
         
         uint256 expirationDate = subscribers[msg.sender].expirationDate + (durationInDays * 1 days);
