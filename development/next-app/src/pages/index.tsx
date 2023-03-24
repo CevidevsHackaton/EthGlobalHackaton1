@@ -34,7 +34,7 @@ export default function Landing() {
               <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
                 <div className="pr-12">
                   <h1 className="text-white font-semibold text-5xl">
-                    Your story starts with us.
+                    Rufflepay
                   </h1>
                   <p className="mt-4 text-lg text-white">
                     a {require("@/assets/img/banner-2-800x800.jpg").src}
