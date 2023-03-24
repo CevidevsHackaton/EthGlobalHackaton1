@@ -25,12 +25,11 @@ const ProtectedRoute = ({ router, children }: TProtectedRoute) => {
    * @var pathIsProtected Checks if path exists in the unprotectedRoutes routes array
    */
   let pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
-  console.log({ pathIsProtected })
-  // useEffect(() => {
-  //   if (isBrowser() && !isConnected && pathIsProtected) {
-  //     router.push(appRoutes.LOGIN_PAGE);
-  //   }
-  // }, [isConnected, pathIsProtected, router])
+  useEffect(() => {
+    if (isBrowser() && !isConnected && pathIsProtected) {
+      router.push(appRoutes.LOGIN_PAGE);
+    }
+  }, [isConnected, pathIsProtected, router])
 
 
   return (
