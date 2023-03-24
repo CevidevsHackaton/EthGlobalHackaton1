@@ -27,6 +27,10 @@ contract Subscription  {
     
     // Mapeo que asocia cada dirección con la información del suscriptor
     mapping(address => Subscriber) public subscribers;
+
+    //Orden de cada subscripcion con su orden
+    mapping(address => uint[] ) public orderSubscribers;
+    
     
     // Evento que se dispara cuando se suscribe un nuevo usuario
     event NewSubscriber(address indexed subscriber, uint256 expirationDate);
