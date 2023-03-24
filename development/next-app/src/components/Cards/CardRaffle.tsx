@@ -4,7 +4,7 @@ import { es, enUS } from 'date-fns/locale';
 import Link from 'next/link';
 import React from 'react';
 import { FaCalendar } from 'react-icons/fa'
-import { TbDog } from 'react-icons/tb'
+import { ImGift } from 'react-icons/im'
 import CardFrame from './CardFrame';
 
 const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
@@ -17,7 +17,7 @@ const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
         >
           <div className="flex items-center gap-1">
             <span className="text-5xl text-blueGray-800 ">
-              <TbDog />
+              <ImGift />
             </span>
           </div>
         </div>
