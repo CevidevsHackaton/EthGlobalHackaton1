@@ -444,11 +444,10 @@ export default function Landing() {
                   <i className="fas fa-medal text-xl"></i>
                 </div>
                 <h6 className="text-xl mt-5 font-semibold text-white">
-                  Facility
+                  Accessibility
                 </h6>
                 <p className="mt-2 mb-4 text-blueGray-400">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card&apos;s content.
+                  You just need to connect your wallet to start creating raffles.
                 </p>
               </div>
               <div className="w-full lg:w-3/12 px-4 text-center">
@@ -459,8 +458,7 @@ export default function Landing() {
                   Transparency
                 </h5>
                 <p className="mt-2 mb-4 text-blueGray-400">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card&apos;s content.
+                  Each raffle is transparent through the use of randomizer.
                 </p>
               </div>
               <div className="w-full lg:w-3/12 px-4 text-center">
@@ -471,8 +469,7 @@ export default function Landing() {
                   Security
                 </h5>
                 <p className="mt-2 mb-4 text-blueGray-400">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card&apos;s content.
+                  The result of each raffle is verifiable thanks to the blockchain.
                 </p>
               </div>
             </div>
