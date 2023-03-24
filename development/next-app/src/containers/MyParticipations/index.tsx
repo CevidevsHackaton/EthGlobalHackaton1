@@ -1,5 +1,5 @@
 import CardRaffleSimple from '@/components/Cards/CardRaffleSimple';
-import CardMembership from '@/components/Cards/CardMembership';
+import CardMembershipSimple from '@/components/Cards/CardMembershipSimple';
 import { TRaffle } from '@/types/raffle';
 import React, { useEffect, useState } from 'react';
 
@@ -12,15 +12,15 @@ const MyParticipations = () => {
       .then((data: TRaffle[]) => {
         setRaffles(data)
       })
-  },)
+  }, [])
   return (
     <main className='grid gap-10 sm:grid-cols-2'>
       <div >
         <div className='grid gap-5'>
-          <CardMembership color='#26C6DA' />
-          <CardMembership color='#fecdd3' />
-          <CardMembership color='#60a5fa' />
-          <CardMembership color='#15803d' />
+          <CardMembershipSimple color='#26C6DA' />
+          <CardMembershipSimple color='#fecdd3' />
+          <CardMembershipSimple color='#60a5fa' />
+          <CardMembershipSimple color='#15803d' />
         </div>
 
       </div>

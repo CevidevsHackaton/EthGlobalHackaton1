@@ -30,7 +30,7 @@ const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
       <CardFrame>
         <div className="flex-none sm:flex">
           <div
-            className="relative mr-5 sm:mb-0 mb-3 hidden sm:grid sm:h-20 sm:w-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500"
+            className="relative 2xl:mr-5 sm:mb-0 mb-3 hidden sm:grid sm:h-20 sm:w-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500"
             aria-hidden="true"
           >
             <div className="flex items-center gap-1">
@@ -54,27 +54,27 @@ const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
 
 
             <div className="mt-4 sm:flex sm:items-center justify-between sm:gap-2">
-              <div className="flex items-center gap-1 text-gray-500">
-                <FaCalendar />
+              <div className='flex gap-2 flex-col xl:flex-col'>
+                <div className="flex items-center gap-1 text-gray-500 ">
+                  <FaCalendar />
 
-                <p className="text-xs font-medium">Finish in {formatDistance(
-                  Date.now(),
-                  new Date(raffle.dateEnd),
-                  { locale: enUS } // Pass the locale as an option
-                )}</p>
+                  <p className="text-xs font-medium">Finish in {formatDistance(
+                    Date.now(),
+                    new Date(raffle.dateEnd),
+                    { locale: enUS } // Pass the locale as an option
+                  )}</p>
+                </div>
+
+                <p className="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
+                  {'Membership '}
+                  <Link
+                    href={`/memberships/${raffle.membershipId}`}
+                    className="underline hover:text-gray-700"
+                  >
+                    {raffle.membershipName}
+                  </Link>
+                </p>
               </div>
-
-              <span className="hidden sm:block" aria-hidden="true">&middot;</span>
-
-              <p className="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
-                {'Membership '}
-                <Link
-                  href={`/memberships/${raffle.membershipId}`}
-                  className="underline hover:text-gray-700"
-                >
-                  {raffle.membershipName}
-                </Link>
-              </p>
               <button
                 onClick={() => openModal()}
                 className="flex-no-shrink bg-green-400 hover:bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-300 hover:border-green-500 text-white rounded-full transition ease-in duration-300"
