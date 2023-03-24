@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FaFileAlt, FaTwitter, FaGithub, FaHamburger, FaDog } from "react-icons/fa"
 import ButtonConnect from "../Blockchain/Button/ButtonConnect";
 import PagesUserDropdowns from "../Blockchain/Dropdowns/PagesUserDropdowns";
-import { TbDog } from "react-icons/tb";
+import { ImGift } from "react-icons/im";
 
 export default function Navbar({ transparent = false }: { transparent?: Boolean }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -62,7 +62,7 @@ export default function Navbar({ transparent = false }: { transparent?: Boolean 
                   className="hover:text-white text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href="/raffles"
                 >
-                  <i className="text-white text-lg leading-lg " ><FaDog /></i>
+                  <i className="text-white text-lg leading-lg " ><ImGift /></i>
                   <span className="lg:hidden inline-block ml-2">Raffles</span>
                 </Link>
               </li>
