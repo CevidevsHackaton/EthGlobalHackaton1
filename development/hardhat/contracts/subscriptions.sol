@@ -7,11 +7,20 @@ pragma solidity ^0.8.10;
 // Declaración del contrato de suscripciones
 contract Subscription  {
     uint256  priceMembership;
+    address  owner ;
+
+        // Array que almacena todas las direcciones de los usuarios suscritos
+    address[] public subscribersArray;
+    // Contador de orden
+    uint256 subscriptionCount;
+    // Arreglo que almacena los números de orden de todas las suscripciones realizadas
+    uint256[] public subscriptionNumbers;
 
     // Estructura que almacena información de cada suscriptor
     struct Subscriber {
         bool isSubscribed;      // Indica si el suscriptor está suscrito
         uint256 expirationDate; // Fecha de expiración de la suscripción
+        uint256 subscriptionNumber; // Número de orden de la suscripción
     }
     
     // Dirección del propietario del contrato
@@ -26,13 +35,19 @@ contract Subscription  {
     event SubscriptionRenewed(address indexed subscriber, uint256 expirationDate);
 
 
-    //Verificador para saber si es el dueño
+    // Verificador para asegurarnos de que solo el propietario pueda ejecutar ciertas funciones
+    modifier onlyOwner() {
+        require(msg.sender == owner, 
+        "Solo el propietario puede ejecutar esta funcioon"
+        );
+        _;
+    }
 
        
     // Constructor del contrato
     constructor(uint _priceMembership)  {
         priceMembership = _priceMembership;
-
+        owner=msg.sender;
     }
 
      // Verificador para aceptar el valor del pago de la suscripción
@@ -48,8 +63,13 @@ contract Subscription  {
         require(!subscribers[msg.sender].isSubscribed, "El usuario ya esta suscrito");
         
         uint256 expirationDate = block.timestamp + (durationInDays * 1 days);
-        subscribers[msg.sender] = Subscriber(true, expirationDate);
-        
+        uint256 subscriptionNumber = ++subscriptionCount;
+
+        subscribers[msg.sender] = Subscriber(true, expirationDate, subscriptionNumber); 
+        // Mandado la wallet al array 
+        subscribersArray.push(msg.sender);
+        subscriptionNumbers.push(subscriptionNumber);
+
         emit NewSubscriber(msg.sender, expirationDate);
     }
     
@@ -72,5 +92,13 @@ contract Subscription  {
     function getExpirationDate(address user) public view returns (uint256) {
         return subscribers[user].expirationDate;
      }
+
+    function getAllSubscribers() public view onlyOwner returns (address[] memory) {
+        return subscribersArray; 
+    }
+
+    function getOrderSubscribers() public view onlyOwner returns (uint[] memory) {
+        return subscriptionNumbers; 
+    }
 }
     
