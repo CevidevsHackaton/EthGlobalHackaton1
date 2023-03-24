@@ -74,7 +74,7 @@ export default function Landing() {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
                       <i className="fas fa-award"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">1.First</h6>
+                    <h6 className="text-xl font-semibold">First</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
                       You will need to connect your wallet and create a raffle, specifying the participants, the date of the draw, and the prize on offer.
                     </p>
@@ -88,7 +88,7 @@ export default function Landing() {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-lightBlue-400">
                       <i className="fas fa-retweet"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">2.Next</h6>
+                    <h6 className="text-xl font-semibold">Next</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
                       When the draw date arrives, the raffle will take place, and a notification will be sent to the winner.
                     </p>
@@ -102,7 +102,7 @@ export default function Landing() {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-emerald-400">
                       <i className="fas fa-fingerprint"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">3.Finally</h6>
+                    <h6 className="text-xl font-semibold">Finally</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
                       The winner can claim their prize by providing your address token, where they Will sign to accept it.
                     </p>
