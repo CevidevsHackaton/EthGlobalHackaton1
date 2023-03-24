@@ -38,7 +38,7 @@ export default function Landing() {
                   </h1>
                   <p className="mt-4 text-lg text-white">
                     a {require("@/assets/img/banner-2-800x800.jpg").src}
-                    This is a simple example of a Landing Page you can build
+                    Create raffles with exclusive prizes for your community
                     using.
                   </p>
                 </div>
