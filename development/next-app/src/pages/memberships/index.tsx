@@ -10,12 +10,19 @@ const Memberships = () => {
   useEffect(() => {
     setTransparent(false)
     window
-      .fetch(`/api/raffles`)
+      .fetch(`/api/memberships`)
       .then((response) => response.json())
       .then((data: TMembership[]) => {
         setMemberships(data)
       })
   }, [])
+
+  const colors = [
+    '#26C6DA',
+    '#fecdd3',
+    '#60a5fa',
+    '#15803d',
+  ]
   return (
     <main className="bg-slate-100 pt-16 min-h-screen">
       <div className=" mt-10 mx-10 grid gap-5">
@@ -24,7 +31,7 @@ const Memberships = () => {
         </h2>
       </div>
       <div className="mt-10 mx-10 grid md:grid-cols-2 gap-10">
-        {memberships.map((membership, idx) => <CardMembership key={idx} />)}
+        {memberships.map((membership, idx) => <CardMembership key={idx} membership={membership} color={colors[idx % 4]} />)}
       </div>
 
     </main>
