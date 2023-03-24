@@ -15,7 +15,7 @@ export default function Landing() {
       .then((data: TRaffle[]) => {
         setRaffles(data)
       })
-  },)
+  }, [])
   return (
     <>
       <main className="bg-slate-100 pt-16 min-h-screen">

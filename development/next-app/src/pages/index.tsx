@@ -12,7 +12,7 @@ export default function Landing() {
   const { setTransparent } = useContext(LayoutContext)
   useEffect(() => {
     setTransparent(true)
-  },)
+  }, [])
   return (
     <>
       <main>

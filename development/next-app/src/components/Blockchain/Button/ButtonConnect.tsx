@@ -24,16 +24,13 @@ const ButtonConnect = ({ children }: ButtonConnectProps) => {
 
   })
 
-
   useEffect(() => {
     if (isConnected) {
       setRender(children)
     } else {
       setRender(Button)
     }
-  }, [Button, children, isConnected])
-
-
+  }, [isConnected])
 
   return (
     <>

@@ -14,15 +14,15 @@ const Profile = () => {
   const { setTransparent } = useContext(LayoutContext)
   useEffect(() => {
     setTransparent(false)
-  },)
+  }, [])
   const [selectedTab, setSelectedTab] = useTabs([
     "Memberships",
     "Participations",
   ]);
   return (
     <main className='pt-16 bg-slate-100 min-h-screen'>
-      <div className='grid gap-10 sm:grid-cols-4 m-10'>
-        <div>
+      <div className='grid gap-10 md:grid-cols-4 m-10'>
+        <div className=''>
 
           <CardFrame className='grid gap-10'>
             <div>
@@ -32,7 +32,7 @@ const Profile = () => {
                 <MdModeEditOutline />
               </button>
             </div>
-            <div className=" relative h-72 w-72 mx-auto  sm:mb-0 mb-3">
+            <div className=" relative mx-auto mb-3 xl:w-56  2xl:h-72 2xl:w-72 sm:mb-0">
               <Image
                 alt="..."
                 src={require("@/assets/img/team-1-800x800.jpg").default}
@@ -47,7 +47,7 @@ const Profile = () => {
           </CardFrame>
         </div>
 
-        <div className='sm:col-span-3'>
+        <div className='md:col-span-3'>
           <nav className=" flex border-b border-gray-300">
             <TabSelector
               isActive={selectedTab === "Memberships"}

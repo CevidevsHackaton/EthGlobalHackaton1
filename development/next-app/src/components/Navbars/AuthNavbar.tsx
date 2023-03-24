@@ -3,10 +3,10 @@ import React from "react";
 import Link from 'next/link';
 
 // components
-import IndexDropdown from "../Dropdowns/IndexDropdown";
-import { FaFileAlt, FaTwitter, FaGithub, FaHamburger } from "react-icons/fa"
+import { FaFileAlt, FaTwitter, FaGithub, FaHamburger, FaDog } from "react-icons/fa"
 import ButtonConnect from "../Blockchain/Button/ButtonConnect";
 import PagesUserDropdowns from "../Blockchain/Dropdowns/PagesUserDropdowns";
+import { TbDog } from "react-icons/tb";
 
 export default function Navbar({ transparent = false }: { transparent?: Boolean }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -19,7 +19,7 @@ export default function Navbar({ transparent = false }: { transparent?: Boolean 
               href="/"
               className="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
             >
-              EthGlobal
+              RufflePay
             </Link>
             <button
               className="cursor-pointer text-xl text-white leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -37,7 +37,7 @@ export default function Navbar({ transparent = false }: { transparent?: Boolean 
             id="example-navbar-warning"
           >
             <ul className="flex flex-col lg:flex-row list-none mr-auto">
-              <li className="flex items-center">
+              {/* <li className="flex items-center">
                 <Link
                   className="hover:text-white text-white px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href=""
@@ -45,11 +45,27 @@ export default function Navbar({ transparent = false }: { transparent?: Boolean 
                   <i className="text-white text-lg leading-lg mr-2"><FaFileAlt /></i>{" "}
                   Docs
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
 
-
+              <li className="flex items-center">
+                <Link
+                  className="hover:text-white text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs  font-bold"
+                  href="/memberships"
+                >
+                  <span className="text-white text-sm leading-lg " >Memberships</span>
+                </Link>
+              </li>
+              <li className="flex items-center">
+                <Link
+                  className="hover:text-white text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                  href="/raffles"
+                >
+                  <i className="text-white text-lg leading-lg " ><FaDog /></i>
+                  <span className="lg:hidden inline-block ml-2">Raffles</span>
+                </Link>
+              </li>
               <li className="flex items-center">
                 <Link
                   className="hover:text-white text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"

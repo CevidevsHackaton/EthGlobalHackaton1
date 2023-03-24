@@ -18,6 +18,7 @@ const ProtectedRoute = ({ router, children }: TProtectedRoute) => {
   let unprotectedRoutes = [
     appRoutes.LOGIN_PAGE,
     appRoutes.RAFFLES_PAGE,
+    appRoutes.MEMBERSHIPS_PAGE,
   ];
 
   /**
@@ -25,11 +26,11 @@ const ProtectedRoute = ({ router, children }: TProtectedRoute) => {
    */
   let pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
   console.log({ pathIsProtected })
-  useEffect(() => {
-    if (isBrowser() && !isConnected && pathIsProtected) {
-      router.push(appRoutes.LOGIN_PAGE);
-    }
-  }, [isConnected, pathIsProtected, router])
+  // useEffect(() => {
+  //   if (isBrowser() && !isConnected && pathIsProtected) {
+  //     router.push(appRoutes.LOGIN_PAGE);
+  //   }
+  // }, [isConnected, pathIsProtected, router])
 
 
   return (

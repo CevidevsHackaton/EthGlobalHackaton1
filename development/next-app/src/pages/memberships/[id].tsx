@@ -9,7 +9,7 @@ const MembershipDetail = () => {
   const { setTransparent } = useContext(LayoutContext)
   useEffect(() => {
     setTransparent(false)
-  },)
+  }, [])
   const { query } = useRouter()
 
   return (
