@@ -36,7 +36,7 @@ const Profile = () => {
               <Image
                 alt="..."
                 src={require("@/assets/img/team-1-800x800.jpg").default}
-                className="shadow-lg rounded-full mx-auto  "
+                className="shadow-lg rounded-full mx-auto"
               />
               <Link href="#"
                 className="absolute right-5 bottom-6 hover:bottom-4 hover:right-3 -ml-3  text-white p-2 hover:p-4 text-lg bg-green-400 hover:bg-green-500 font-medium tracking-wider rounded-full transition ease-in duration-300">

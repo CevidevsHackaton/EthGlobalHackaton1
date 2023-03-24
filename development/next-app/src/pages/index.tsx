@@ -26,7 +26,7 @@ export default function Landing() {
       <main>
         <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
           <div
-            className="absolute top-0 w-full h-full bg-center bg-cover"
+            className="absolute top-0 w-full h-full bg-center bg-cover bg-cover bg-top"
             style={{
               backgroundImage:
                 `url(${banner2.src})`,
@@ -196,8 +196,8 @@ export default function Landing() {
               <div className="w-full md:w-4/12 ml-auto mr-auto px-4">
                 <Image
                   alt="..."
-                  className="max-w-full rounded-lg shadow-lg"
-                  src={require("@/assets/img/banner-3-800x800.jpg").default}
+                  className="max-w-full rounded-lg shadow-lg bg-cover"
+                  src={require("@/assets/img/banner-4-800x800.jpg").default}
                 />
               </div>
               <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
@@ -410,6 +410,8 @@ export default function Landing() {
                 <div className="px-6">
                   <Image
                     alt="..."
+                    width={200}
+                    height={200}
                     src={require("@/assets/img/team-4-470x470.png").default}
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
