@@ -104,7 +104,7 @@ export default function Landing() {
                     </div>
                     <h6 className="text-xl font-semibold">Finally</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
-                      The winner can claim their prize by providing your address token, where they Will sign to accept it.
+                      The winner can claim their prize by providing your address token, where they will sign to accept it.
                     </p>
                   </div>
                 </div>
