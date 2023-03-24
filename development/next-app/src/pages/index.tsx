@@ -447,7 +447,7 @@ export default function Landing() {
                   Accessibility
                 </h6>
                 <p className="mt-2 mb-4 text-blueGray-400">
-                  You just need to connect your wallet to start creating raffles.
+                  You just need to connect your wallet to start creating raffles
                 </p>
               </div>
               <div className="w-full lg:w-3/12 px-4 text-center">
@@ -458,7 +458,7 @@ export default function Landing() {
                   Transparency
                 </h5>
                 <p className="mt-2 mb-4 text-blueGray-400">
-                  Each raffle is transparent through the use of randomizer.
+                  Each raffle is transparent through the use of Chainlink
                 </p>
               </div>
               <div className="w-full lg:w-3/12 px-4 text-center">
@@ -469,7 +469,7 @@ export default function Landing() {
                   Security
                 </h5>
                 <p className="mt-2 mb-4 text-blueGray-400">
-                  The result of each raffle is verifiable thanks to the blockchain.
+                  The result of each raffle is verifiable thanks to the Gnosis chain
                 </p>
               </div>
             </div>
