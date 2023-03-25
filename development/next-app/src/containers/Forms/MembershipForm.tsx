@@ -22,11 +22,14 @@ const MembershipForm = () => {
   const createLockContact = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
 
-    const nombre = ev.target.elements.name.value;
-    const price = ev.target.elements.price.value
-    const time = ev.target.elements.time.value
-    const totalMembers = ev.target.elements.totalMembers.value
-    const description = ev.target.elements.description.value
+    const target: any = ev.target
+    const elements = target.element
+
+    const nombre = elements.name.value;
+    const price = elements.price.value
+    const time = elements.time.value
+    const totalMembers = elements.totalMembers.value
+    const description = elements.description.value
 
     const timeContract = parseInt((parseFloat(time) * DAY).toFixed(0))
 
