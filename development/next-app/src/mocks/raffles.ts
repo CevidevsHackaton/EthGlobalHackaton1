@@ -7,7 +7,7 @@ export const raffles: TRaffle[] = [
     dateStar: new Date("2023-01-02"),
     dateEnd: new Date("2023-04-30"),
     membersCount: 20,
-    membershipName: "ORG 1 - basic 1",
+    membershipName: "new Ruffle",
     membershipId: 50,
     requirements: {
       monthsOfMembership: 2,

@@ -10,8 +10,11 @@ import { Portal } from '../Portal';
 import { TUser } from '@/types/user';
 import ListContainer from '../List/ListContainer';
 import ListItem from '../List/ListItem';
+import { useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { abiLottery } from '@/config/abi';
+import { BigNumber } from 'ethers';
 
-const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
+const CardRaffle = ({ raffle, isNew }: { raffle: TRaffle, isNew?: boolean }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -25,6 +28,22 @@ const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
         setUsers(data)
       })
   }, [])
+  const { config } = usePrepareContractWrite({
+    address: '0xDf89894145A2833F5Eb4DFB909A7889B04692bEF',
+    abi: abiLottery,
+    functionName: 'getWinner',
+    overrides: {
+      gasLimit: BigNumber.from(10000000),
+    },
+  })
+  const { write: genereateWinner, isSuccess } = useContractWrite(config,)
+  const { data, isError, isLoading } = useContractRead({
+    address: '0xDf89894145A2833F5Eb4DFB909A7889B04692bEF',
+    abi: abiLottery,
+    functionName: 'lastwinner',
+  })
+
+
   return (
     <>
       <CardFrame>
@@ -75,13 +94,21 @@ const CardRaffle = ({ raffle }: { raffle: TRaffle }) => {
                   </Link>
                 </p>
               </div>
-              <button
-                onClick={() => openModal()}
-                className="flex-no-shrink bg-green-400 hover:bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-300 hover:border-green-500 text-white rounded-full transition ease-in duration-300"
-              >
-                FOLLOW
-              </button>
-
+              <div className='grid'>
+                {isNew && !isSuccess && <button
+                  className="mb-2 max-h-10 flex-no-shrink bg-blueGray-600 hover:bg-blueGray-900 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-blueGray-800 hover:border-blueGray-900 text-white rounded-full transition ease-in duration-300"
+                  onClick={genereateWinner}
+                >
+                  FINISH
+                </button>}
+                {isNew && isSuccess && !isLoading && (<p> {JSON.stringify(data)}</p>)}
+                <button
+                  className="max-h-10 flex-no-shrink bg-green-600 hover:bg-green-900 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-800 hover:border-green-900 text-white rounded-full transition ease-in duration-300"
+                  onClick={openModal}
+                >
+                  FOLLOWERS
+                </button>
+              </div>
             </div>
           </div>
 

@@ -6,7 +6,7 @@ import { WagmiConfig, createClient, configureChains } from 'wagmi'
 // Provider (alchemy, infura)
 import { publicProvider } from 'wagmi/providers/public'
 // chains
-import { mainnet, sepolia, polygonZkEvmTestnet } from 'wagmi/chains'
+import { mainnet, polygonMumbai, goerli } from 'wagmi/chains'
 
 // Connectors
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -16,7 +16,7 @@ import { Layout } from '@/layouts/PrincipalLayout'
 import ProtectedRoute from '@/router/ProtectedRoute'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [sepolia,],
+  [polygonMumbai, goerli],
   [publicProvider()],
 )
 

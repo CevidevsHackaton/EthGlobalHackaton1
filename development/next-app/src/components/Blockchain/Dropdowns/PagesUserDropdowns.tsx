@@ -76,12 +76,6 @@ const PagesUserDropdowns = () => {
                 Pages
               </span>
               <Link
-                href="/"
-                className="text-sm cursor-pointer py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-              >
-                Suscriptions
-              </Link>
-              <Link
                 href="/raffles"
                 className="text-sm cursor-pointer py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
               >

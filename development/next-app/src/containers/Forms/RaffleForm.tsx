@@ -1,34 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import { useAccount } from 'wagmi';
 
 import { TMembership } from '@/types/membership';
 import Select from "react-tailwindcss-select";
-import { SelectValue } from "react-tailwindcss-select/dist/components/type"
+import { SelectValue, Option } from "react-tailwindcss-select/dist/components/type"
+import { raffles } from '@/mocks/raffles';
 
 
 
 const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
-  const { address } = useAccount()
 
   const [selectedOptions, setSelectedOptions] = useState<SelectValue>([]);
 
   const [membershipOptions, setMembershipOptions] = useState([{ label: '', value: '' }])
 
-
-
   useEffect(() => {
-    const options = memberships
-      .map((mem) =>
-      ({
-        value: mem.address,
-        label: mem.description
-      })
+    const options: Option[] = memberships
+      .map((mem) => {
+        const option: Option = {
+          value: mem.address,
+          label: mem.name
+        }
+        return option
+      }
       )
     setMembershipOptions(options)
   }, [memberships])
 
+
+  const addRaffle = (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault()
+
+    raffles.push({
+      id: "D215D15C80AC2D12",
+      dateStar: new Date("2023-01-02"),
+      dateEnd: new Date("2023-04-04"),
+      description: " ev.target.elements.description.value",
+      membershipId: 40,
+      membersCount: 200,
+      membershipName: "newRuffle",
+      name: "newRuffle",
+      requirements: {
+        monthsOfMembership: 2,
+        isActiveMembership: false,
+        costRaffle: 0
+      },
+    })
+  }
+
+
+
+
   return (
-    <form>
+    <form onSubmit={(ev) => addRaffle(ev)}>
       <div className="relative w-full mb-3 mt-8">
         <label
           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -56,6 +79,7 @@ const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
         </label>
         <input
           type="date"
+          name="date"
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           placeholder="Name"
         />
@@ -71,6 +95,7 @@ const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
           type="text"
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           placeholder="Name"
+          name='name'
         />
       </div>
       <div className="relative w-full mb-3">
@@ -83,6 +108,7 @@ const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
         <textarea
           rows={4}
           cols={80}
+          name='description'
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
           placeholder="Type a message..."
         />
@@ -90,10 +116,11 @@ const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
       <div className="text-center mt-6">
         <button
           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-          type="button"
+          type="submit"
         >
           Create Raffle
         </button>
+
       </div>
     </form >
   );

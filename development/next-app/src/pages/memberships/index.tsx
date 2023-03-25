@@ -1,22 +1,35 @@
 import CardMembership from '@/components/Cards/CardMembership';
 import { LayoutContext } from '@/layouts/PrincipalLayout';
 import { TMembership } from '@/types/membership';
+import { SubgraphService } from '@unlock-protocol/unlock-js';
 import React, { useContext, useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
 
 const Memberships = () => {
   const { setTransparent } = useContext(LayoutContext)
 
   const [memberships, setMemberships] = useState<TMembership[]>([])
+  const { address } = useAccount()
+
+  const getMemberships = async () => {
+    const service = new SubgraphService()
+    const locks = await service.locks(
+      {
+        first: 10,
+        skip: 110,
+        where: { expirationDuration_lte: '10000000000' }
+      },
+      {
+        networks: [80001],
+      }
+    )
+    setMemberships(locks as TMembership[])
+  }
   useEffect(() => {
     setTransparent(false)
-    window
-      .fetch(`/api/memberships`)
-      .then((response) => response.json())
-      .then((data: TMembership[]) => {
-        setMemberships(data)
-      })
-  }, [])
+    getMemberships()
 
+  }, [])
   const colors = [
     '#26C6DA',
     '#fecdd3',

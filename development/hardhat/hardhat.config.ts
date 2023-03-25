@@ -43,9 +43,9 @@ const config: HardhatUserConfig = {
       chainId: 1337, // We set 1337 to make interacting with MetaMask simpler
 
       forking: {
-        url: process.env.API_QUIK_TEST_BSC?? "Ingresar URL correcta",
+        url: process.env.API_QUIK_TEST_BSC ?? "Ingresar URL correcta",
         blockNumber: 16520000,
-        enabled:false
+        enabled: false
       },
 
       accounts: {
@@ -53,7 +53,7 @@ const config: HardhatUserConfig = {
         path: "m/44'/60'/0'/0",
         initialIndex: 0,
         count: 10,
-        accountsBalance:"15000000000000000000000",
+        accountsBalance: "15000000000000000000000",
         passphrase: "",
       },
     },
@@ -129,10 +129,10 @@ const config: HardhatUserConfig = {
         passphrase: "",
       },
     },
-   
+
   },
 
-  etherscan : {
+  etherscan: {
     apiKey: process.env.API_ETHERSCAN
   },
 
