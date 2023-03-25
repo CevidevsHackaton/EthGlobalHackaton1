@@ -3,11 +3,11 @@
 import { ethers } from 'hardhat'
 
 async function deploy() {
-  const LoteryFactory = await ethers.getContractFactory('Lottery');
-  const lotery = await LoteryFactory.deploy(ethers.utils.parseEther("8"));
-  await lotery.deployed()
+  const LotteryFactory = await ethers.getContractFactory('Lottery');
+  const lottery = await LotteryFactory.deploy(80);
+  await lottery.deployed()
 
-  console.log('Address del contrato =>>', lotery.address)
+  console.log('Address del contrato =>>', lottery.address)
 }
 
 deploy()
