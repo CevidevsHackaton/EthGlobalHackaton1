@@ -4,6 +4,7 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-tailwindcss-select/dist/index.esm.js"
   ],
   theme: {
     colors: {
@@ -82,5 +83,6 @@ module.exports = {
     "visited",
     "disabled",
   ],
+  plugins: [require('@tailwindcss/forms')],
 
 }
