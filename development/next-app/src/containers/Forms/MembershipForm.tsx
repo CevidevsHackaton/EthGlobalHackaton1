@@ -1,10 +1,68 @@
-import React from 'react';
-import { useAccount } from 'wagmi';
+import React, { useMemo } from 'react';
+import { useAccount, useSigner } from 'wagmi';
+import { providers, ethers } from 'ethers';
+import { WalletService } from '@unlock-protocol/unlock-js'
+
+const networks = {
+  80001: {
+    unlockAddress: "0x1FF7e338d5E582138C46044dc238543Ce555C963", // Smart contracts docs include all addresses on all networks
+    provider: "https://rpc.unlock-protocol.com/80001",
+  },
+};
 
 const MembershipForm = () => {
+  const provider = new providers.JsonRpcProvider(networks[80001].provider);
   const { address } = useAccount()
+  const { data: signer } = useSigner()
+
+  const MINUTE = 60
+  const HOUR = MINUTE * 60
+  const DAY = HOUR * 24
+
+  const createLockContact = async (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault()
+
+    const nombre = ev.target.elements.name.value;
+    const price = ev.target.elements.price.value
+    const time = ev.target.elements.time.value
+    const totalMembers = ev.target.elements.totalMembers.value
+    const description = ev.target.elements.description.value
+
+    const timeContract = parseInt((parseFloat(time) * DAY).toFixed(0))
+
+    const walletService = new WalletService(networks);
+    console.log({
+      nombre,
+      price,
+      time,
+      totalMembers,
+      timeContract,
+      walletService
+    })
+    // // Connect to a provider with a wallet
+    // await walletService.connect(provider, signer as ethers.Signer);
+
+    // // This only resolves when the transaction has been mined, but the callback returns the hash immediately
+    // await walletService.createLock(
+    //   {
+    //     maxNumberOfKeys: parseInt(parseInt(totalMembers).toFixed(0)),
+    //     name: nombre,
+    //     expirationDuration: timeContract,
+    //     keyPrice: price, // Key price needs to be a string
+    //   },
+    //   {}, // transaction options
+    //   (error, hash) => {
+    //     // This is the hash of the transaction!
+    //     console.log({ hash });
+    //   }
+    // );
+
+  }
+
+
+
   return (
-    <form>
+    <form onSubmit={createLockContact}>
       <div className="relative w-full mb-3 mt-8">
         <label
           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -14,6 +72,7 @@ const MembershipForm = () => {
         </label>
         <input
           type="text"
+          name='address'
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           placeholder="Full Name"
           disabled
@@ -29,6 +88,7 @@ const MembershipForm = () => {
         </label>
         <input
           type="text"
+          name='name'
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           placeholder="Name"
         />
@@ -43,8 +103,38 @@ const MembershipForm = () => {
         </label>
         <input
           type="number"
+          name="price"
+          step={0.001}
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           placeholder="Price (xDai)"
+        />
+      </div>
+      <div className="relative w-full mb-3">
+        <label
+          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+          htmlFor="email"
+        >
+          Membership&apos;s Duration (day)
+        </label>
+        <input
+          type="number"
+          name="time"
+          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Duration Suscription (day)"
+        />
+      </div>
+      <div className="relative w-full mb-3">
+        <label
+          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+          htmlFor="email"
+        >
+          Number of membership
+        </label>
+        <input
+          type="number"
+          name="totalMembers"
+          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Number of membership"
         />
       </div>
 
@@ -58,6 +148,7 @@ const MembershipForm = () => {
         <textarea
           rows={4}
           cols={80}
+          name="description"
           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
           placeholder="Type a message..."
         />
@@ -65,7 +156,7 @@ const MembershipForm = () => {
       <div className="text-center mt-6">
         <button
           className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-          type="button"
+          type="submit"
         >
           Create Membership
         </button>

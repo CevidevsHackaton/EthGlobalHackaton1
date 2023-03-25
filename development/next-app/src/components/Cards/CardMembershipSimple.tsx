@@ -2,12 +2,14 @@ import { TMembership } from '@/types/membership';
 import { TUser } from '@/types/user';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { FaFire, FaRegStar, FaStar, FaUserPlus } from 'react-icons/fa';
+import { FaClock, FaFire, FaRegStar, FaStar, FaUserPlus } from 'react-icons/fa';
 import { MdCardMembership } from 'react-icons/md';
 import ListContainer from '../List/ListContainer';
 import ListItem from '../List/ListItem';
 import { Portal } from '../Portal';
 import CardFrame from './CardFrame';
+
+import { intervalToDuration, formatDuration } from 'date-fns'
 
 type TPropCardMembershipSimple = {
   color?: string
@@ -21,6 +23,15 @@ const CardMembershipSimple = ({ color, membership }: TPropCardMembershipSimple) 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const expiration =
+    membership?.expirationDuration && typeof parseInt(membership.expirationDuration) === 'number'
+      ? parseInt(membership.expirationDuration)
+      : 0
+  const timeInDays = intervalToDuration({
+    end: expiration * 1000,
+    start: 0,
+  }
+  )
   const [users, setUsers] = useState<TUser[]>([])
   useEffect(() => {
     window
@@ -51,11 +62,11 @@ const CardMembershipSimple = ({ color, membership }: TPropCardMembershipSimple) 
               <div className="flex items-center">
                 <div className="flex flex-col">
                   <div className="w-full flex-none text-lg text-gray-800 font-bold leading-none">
-                    {membership?.address}
+                    {membership?.name}
                   </div>
                   <div className="flex-auto text-gray-500 my-1">
                     <span className="mr-3 ">
-                      {membership?.price} xDAI
+                      {membership?.price / 1000000 / 1000000 / 1000000} xDAI
                     </span>
                   </div>
                 </div>
@@ -80,16 +91,20 @@ const CardMembershipSimple = ({ color, membership }: TPropCardMembershipSimple) 
                 </div>
                 <div className="flex-1 inline-flex items-center">
                   <span className={`text-lg mr-2`} style={{ color: colorUse }}>
-                    <FaFire />
+                    <FaClock />
                   </span>
-                  <p className="">14 Components</p>
+                  <p className="">
+                    {formatDuration(timeInDays)
+
+                    }
+                  </p>
                 </div>
               </div>
               <button
-                className="flex-no-shrink bg-green-400 hover:bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-300 hover:border-green-500 text-white rounded-full transition ease-in duration-300"
+                className="max-h-10 flex-no-shrink bg-green-600 hover:bg-green-900 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-800 hover:border-green-900 text-white rounded-full transition ease-in duration-300"
                 onClick={openModal}
               >
-                FOLLOW
+                FOLLOWERS
               </button>
             </div>
           </div>

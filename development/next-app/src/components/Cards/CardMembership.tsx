@@ -1,25 +1,137 @@
 import { TMembership } from '@/types/membership';
 import { TUser } from '@/types/user';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { FaFire, FaRegStar, FaStar, FaUserPlus } from 'react-icons/fa';
+import React, { useEffect, useState, } from 'react';
+import { FaBell, FaBellSlash, FaFire, FaRegStar, FaStar, FaUserPlus } from 'react-icons/fa';
 import { MdCardMembership } from 'react-icons/md';
+import { useContract, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import ListContainer from '../List/ListContainer';
 import ListItem from '../List/ListItem';
 import { Portal } from '../Portal';
 import CardFrame from './CardFrame';
+
+import * as PushAPI from '@pushprotocol/restapi'
+import { BigNumber, ethers } from 'ethers';
+import { abiLottery } from '@/config/abi';
+import { intervalToDuration, formatDuration } from 'date-fns';
 
 type TPropCardMembership = {
   color?: string
   membership: TMembership
 }
 
+
+
 const CardMembership = ({ color, membership }: TPropCardMembership) => {
+
+  const subscribe = async () => {
+    if (window) {
+      if (window.ethereum) {
+        const ethereum = window.ethereum as ethers.providers.ExternalProvider
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const _signer = await provider.getSigner()
+        await PushAPI.channels.subscribe({
+          signer: _signer,
+          channelAddress: 'eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681', // channel address in CAIP
+          userAddress: 'eip155:5:0x52f856A160733A860ae7DC98DC71061bE33A28b3', // user address in CAIP
+          onSuccess: () => {
+            console.log('opt in success');
+          },
+          onError: () => {
+            console.error('opt in error');
+          },
+
+          env: 'staging'
+        })
+      }
+    }
+  }
+
+  const unsubscribe = async () => {
+    if (window) {
+      if (window.ethereum) {
+        const ethereum = window.ethereum as ethers.providers.ExternalProvider
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const _signer = await provider.getSigner()
+        await PushAPI.channels.unsubscribe({
+          signer: _signer,
+          channelAddress: 'eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681', // channel address in CAIP
+          userAddress: 'eip155:5:0x52f856A160733A860ae7DC98DC71061bE33A28b3', // user address in CAIP
+          onSuccess: () => {
+            console.log('opt out success');
+          },
+          onError: () => {
+            console.error('opt out error');
+          },
+          env: 'staging'
+        })
+      }
+    }
+  }
+
+  // const lottery = useContract({
+  //   address: '0xDf89894145A2833F5Eb4DFB909A7889B04692bEF',
+  //   abi: abiLottery,
+  // })
+  // const { data: nBloqueFinal } = useBlockNumber()
+  // const getArrayParticipantesLottery = useCallback(async () => {
+  //   if (lottery) {
+
+  //     const eventFilterStartLottery = lottery.filters.startLottery(null)
+  //     const arraystartLottery = await lottery.queryFilter(eventFilterStartLottery);
+  //     const arrayNumberBlock = arraystartLottery?.map(elemento => elemento.blockNumber)
+
+  //     console.log(arrayNumberBlock);
+  //     if (arrayNumberBlock) {
+
+  //       const nBloqueInicial = arrayNumberBlock[arrayNumberBlock.length - 1]
+
+  //       console.log("nBloqueInicial => ", nBloqueInicial);
+  //       console.log("nBloqueFinal => ", nBloqueFinal);
+  //       const eventFilterDepositLottery = lottery.filters.depositLottery(null)
+
+  //       const ListaUsuarios = await lottery?.queryFilter(eventFilterDepositLottery, nBloqueInicial, nBloqueFinal);
+  //       if (ListaUsuarios && ListaUsuarios.length > 0) {
+  //         const arrayAddressUsers = ListaUsuarios.map((element: ethers.Event) => element?.args && element.args[0])
+
+  //         console.log("arrayAddressUsers => ", arrayAddressUsers);
+  //         return arrayAddressUsers
+  //       }
+  //     }
+  //   }
+  // }, [nBloqueFinal, lottery])
+
+
+
+  const { config } = usePrepareContractWrite({
+    address: '0xDf89894145A2833F5Eb4DFB909A7889B04692bEF',
+    abi: abiLottery,
+    functionName: 'suscripcion',
+    overrides: {
+      gasLimit: BigNumber.from(10000000),
+      value: BigNumber.from(80),
+    },
+  })
+  const { write: suscripcionMembership } = useContractWrite(config,)
+
   const colorUse = color ?? '#1E3229'
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+
+  const expiration =
+    membership?.expirationDuration
+      && typeof membership.expirationDuration === "string"
+      && typeof parseInt(membership.expirationDuration) === 'number'
+      ? parseInt(membership.expirationDuration) || 0
+      : 0
+
+  const timeInDays = intervalToDuration({
+    end: expiration * 1000,
+    start: 0,
+  }
+  )
 
   const [users, setUsers] = useState<TUser[]>([])
   useEffect(() => {
@@ -51,11 +163,11 @@ const CardMembership = ({ color, membership }: TPropCardMembership) => {
               <div className="flex items-center">
                 <div className="flex flex-col">
                   <div className="w-full flex-none text-lg text-gray-800 font-bold leading-none">
-                    {membership?.address}
+                    {membership?.name}
                   </div>
                   <div className="flex-auto text-gray-500 my-1">
                     <span className="mr-3 ">
-                      {membership?.price} xDAI
+                      {membership?.price / 1000000 / 1000000 / 1000000} xDAI
                     </span>
                   </div>
                 </div>
@@ -82,14 +194,18 @@ const CardMembership = ({ color, membership }: TPropCardMembership) => {
                   <span className={`text-lg mr-2`} style={{ color: colorUse }}>
                     <FaFire />
                   </span>
-                  <p className="">14 Components</p>
+                  <p className="">
+                    {formatDuration(timeInDays)
+
+                    }
+                  </p>
                 </div>
               </div>
               <button
-                className="flex-no-shrink bg-green-400 hover:bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-300 hover:border-green-500 text-white rounded-full transition ease-in duration-300"
+                className="max-h-10 flex-no-shrink bg-green-600 hover:bg-green-900 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-800 hover:border-green-900 text-white rounded-full transition ease-in duration-300"
                 onClick={openModal}
               >
-                FOLLOW
+                FOLLOWERS
               </button>
             </div>
           </div>
@@ -99,8 +215,26 @@ const CardMembership = ({ color, membership }: TPropCardMembership) => {
         isOpen={isModalOpen}
         requestClose={closeModal}
       >
-        <section className='bg-slate-200 w-full p-8 pt-16'>
+        <section className='bg-slate-200 w-full p-8 pt-16 grid'>
           <span className='text-3xl '>Participantes</span>
+          <div className='grid grid-flow-col gap-3 w-2/5'>
+            <button
+              onClick={subscribe}
+              className='border-2 mx-auto border-blue-600 bg-blue-500 p-1 rounded-lg text-white'>
+              <FaBell />
+            </button>
+            <button
+              onClick={unsubscribe}
+              className='border-2 mx-auto border-blue-600 bg-blue-500 p-1 rounded-lg text-white'>
+              <FaBellSlash />
+            </button>
+            <button
+              // disabled={!suscripcionMembership}
+              onClick={() => suscripcionMembership?.()}
+              className='disabled:bg-gray-700 border-2  border-green-800 bg-green-500 p-1 rounded-lg text-white'>
+              Buy membership
+            </button>
+          </div>
           <CardFrame className='mt-7 flow-root'>
 
             <ListContainer
