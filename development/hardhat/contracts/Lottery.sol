@@ -8,9 +8,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 
 // PUSH Comm Contract Interface
-interface IPUSHCommInterface {
-    function sendNotification(address _channel, address _recipient, bytes calldata _identity) external;
-}
+// interface IPUSHCommInterface {
+//     function sendNotification(address _channel, address _recipient, bytes calldata _identity) external;
+// }
 
 
 contract Lottery is DateTime, RandomChainlink, Pausable {
@@ -33,6 +33,7 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
 
     event startLottery (uint indexed numberBlock);
     event depositLottery (address indexed user );
+    event eWinner (address indexed _winner);
 
     constructor(uint _costoMensual) {    
         costoMensual= _costoMensual;
@@ -47,10 +48,18 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
 
 
     function lastwinner() public view returns(address) {
+       
+        if(winners.length>0){
         uint numberAllWinners = winners.length;
-        address vlastwinner = winners[numberAllWinners];
+        address vlastwinner = winners[numberAllWinners-1];
 
         return vlastwinner;
+        }
+
+        else{
+        return address(0);
+        }
+        
     }
 
 
@@ -133,10 +142,11 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
         lastRequestId=0;
 
         timeNextLotery();
-        notification(winner); 
+        // notification(winner); 
         withdrawWinner();
 
         emit startLottery(block.number);
+        
         _unpause();
     }
 
@@ -147,38 +157,39 @@ contract Lottery is DateTime, RandomChainlink, Pausable {
         winner=address(0);
         poolWinner=0;
         
+        emit eWinner(winner);
         return res;
     }
 
 
-    function notification(address _winner) internal {
+    // function notification(address _winner) internal {
         
-        address CHANNEL_ADDRESS =  0x70E24350DCA5C9EB381fE4bCf4474E27f1e66C12;
-        string memory Title = "You Win!";
-        string memory Body = "Congratulations on winning the award!";
+    //     address CHANNEL_ADDRESS =  0x70E24350DCA5C9EB381fE4bCf4474E27f1e66C12;
+    //     string memory Title = "You Win!";
+    //     string memory Body = "Congratulations on winning the award!";
 
-        // address Staging Ethereum contract - Goerli 0x87da9Af1899ad477C67FeA31ce89c1d2435c77DC 
-        // address Staging Polygon contract - Mumbai 0xb3971BCef2D791bc4027BbfedFb47319A4AAaaAa
+    //     // address Staging Ethereum contract - Goerli 0x87da9Af1899ad477C67FeA31ce89c1d2435c77DC 
+    //     // address Staging Polygon contract - Mumbai 0xb3971BCef2D791bc4027BbfedFb47319A4AAaaAa
 
-        IPUSHCommInterface(0xb3971BCef2D791bc4027BbfedFb47319A4AAaaAa).sendNotification(
-                        CHANNEL_ADDRESS, 
-                        _winner, 
-                        bytes(  
-                            string(
-                                abi.encodePacked(
-                                    "0", 
-                                    "+", 
-                                    "3", 
-                                    "+", 
-                                    Title,                                    
-                                    "+", 
-                                    Body 
-                                )
-                            )
-                        )
-                    );
-    }
+    //     IPUSHCommInterface(0xb3971BCef2D791bc4027BbfedFb47319A4AAaaAa).sendNotification(
+    //                     CHANNEL_ADDRESS, 
+    //                     _winner, 
+    //                     bytes(  
+    //                         string(
+    //                             abi.encodePacked(
+    //                                 "0", 
+    //                                 "+", 
+    //                                 "3", 
+    //                                 "+", 
+    //                                 Title,                                    
+    //                                 "+", 
+    //                                 Body 
+    //                             )
+    //                         )
+    //                     )
+    //                 );
+    // }
 
 }
 
-//remixd -s /home/danyr/proyectos/hackaton2/EthGlobalHackaton1/development/hardhat --remix-ide https://remix.ethereum.org
+//remixd -s /home/danyr/EthGlobalHackaton1/development/hardhat --remix-ide https://remix.ethereum.org
