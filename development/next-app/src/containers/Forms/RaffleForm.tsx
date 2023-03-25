@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 import { TMembership } from '@/types/membership';
 import Select from "react-tailwindcss-select";
 import { SelectValue, Option } from "react-tailwindcss-select/dist/components/type"
-import { abiLottery } from '@/config/abi';
-import { BigNumber } from 'ethers';
 import { raffles } from '@/mocks/raffles';
 
 
 
-const RaffleForm = ({ memberships, onSuccess }: { memberships: TMembership[] }) => {
+const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
 
   const [selectedOptions, setSelectedOptions] = useState<SelectValue>([]);
 
