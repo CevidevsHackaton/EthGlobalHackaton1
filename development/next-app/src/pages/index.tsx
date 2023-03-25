@@ -14,6 +14,7 @@ import { ImEye } from "react-icons/im";
 import { GoShield } from "react-icons/go"
 import { HiBadgeCheck } from "react-icons/hi"
 import { SlTrophy } from "react-icons/sl"
+import { MdOutlineHandshake } from "react-icons/md";
 
 
 export default function Landing() {
@@ -122,7 +123,7 @@ export default function Landing() {
             <div className="flex flex-wrap items-center mt-32">
               <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
                 <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
-                  <i className="fas fa-user-friends text-xl"></i>
+                  <MdOutlineHandshake className="text-2xl" />
                 </div>
                 <h3 className="text-3xl mb-2 font-semibold leading-normal">
                   About us
@@ -133,9 +134,6 @@ export default function Landing() {
                 <p className="text-lg font-light leading-relaxed mt-0 mb-4 text-blueGray-600">
                   Rufflepay enables you to precisely segment your audience based on their membership level, and conduct raffles accordingly.
                 </p>
-                <Link href="/" className="font-bold text-blueGray-700 mt-8">
-                  Check Notus React!
-                </Link>
               </div>
 
               <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
