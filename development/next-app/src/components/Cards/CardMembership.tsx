@@ -39,8 +39,6 @@ const CardMembership = ({ color, membership }: TPropCardMembership) => {
           onError: () => {
             console.error('opt in error');
           },
-
-          env: 'staging'
         })
       }
     }
@@ -62,7 +60,6 @@ const CardMembership = ({ color, membership }: TPropCardMembership) => {
           onError: () => {
             console.error('opt out error');
           },
-          env: 'staging'
         })
       }
     }
