@@ -10,7 +10,7 @@ import { SelectValue } from "react-tailwindcss-select/dist/components/type"
 const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
   const { address } = useAccount()
 
-  const [selectedOptions, setSelectedOptions] = useState<SelectValue[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<SelectValue>([]);
 
   const [membershipOptions, setMembershipOptions] = useState([{ label: '', value: '' }])
 
@@ -39,14 +39,13 @@ const RaffleForm = ({ memberships }: { memberships: TMembership[] }) => {
 
         <Select
           value={selectedOptions}
-          onChange={(value: SelectValue) => setSelectedOptions(value)}
+          onChange={(value) => setSelectedOptions(value)}
           options={membershipOptions}
           classNames={{ list: "z-10" }}
           primaryColor={"blue"}
           isMultiple={true}
           loading={false}
-        >
-        </Select>
+        />
       </div>
       <div className="relative w-full mb-3 mt-8">
         <label
